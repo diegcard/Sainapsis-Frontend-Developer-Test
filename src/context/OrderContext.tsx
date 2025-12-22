@@ -32,7 +32,6 @@ export const OrderProvider: React.FC<OrderProviderProps> = ({ children }) => {
   const [transitions, setTransitions] = useState<StateTransition[]>([]);
 
   const createOrder = useCallback((formData: OrderFormData): Order => {
-    // Calculate total amount from product details
     const amount = formData.productDetails.reduce(
       (sum, product) => sum + product.quantity * product.unitPrice,
       0
@@ -50,14 +49,13 @@ export const OrderProvider: React.FC<OrderProviderProps> = ({ children }) => {
 
     setOrders((prev) => [...prev, newOrder]);
 
-    // Create initial transition log
     const initialTransition: StateTransition = {
       id: crypto.randomUUID(),
       orderId: newOrder.id,
       previousState: OrderState.PENDING,
       newState: OrderState.PENDING,
       transitionDate: new Date(),
-      actionTaken: OrderAction.START_PREPARATION, // Placeholder action for creation
+      actionTaken: OrderAction.START_PREPARATION,
     };
 
     setTransitions((prev) => [...prev, initialTransition]);

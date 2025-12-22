@@ -1,5 +1,3 @@
-// Types for the Order Management System
-
 export const OrderState = {
   PENDING: 'Pending',
   IN_REVIEW: 'In Review',

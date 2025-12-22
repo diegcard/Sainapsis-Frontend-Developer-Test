@@ -20,7 +20,6 @@ export const TransitionLog: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Filter Section */}
       <Card>
         <CardHeader>
           <CardTitle className="text-lg">Filter Transitions</CardTitle>
@@ -42,7 +41,6 @@ export const TransitionLog: React.FC = () => {
         </CardContent>
       </Card>
 
-      {/* Transitions List */}
       {filteredTransitions.length === 0 ? (
         <Card>
           <CardContent className="py-12 text-center">
@@ -72,7 +70,6 @@ export const TransitionLog: React.FC = () => {
                 <Card key={transition.id} className="hover:shadow-md transition-shadow">
                   <CardContent className="pt-6">
                     <div className="space-y-4">
-                      {/* Header */}
                       <div className="flex items-start justify-between">
                         <div>
                           <h3 className="font-semibold">
@@ -89,7 +86,6 @@ export const TransitionLog: React.FC = () => {
                         </div>
                       </div>
 
-                      {/* Transition Flow */}
                       <div className="flex items-center gap-3 p-4 bg-muted rounded-lg">
                         <Badge
                           className={OrderStateMachine.getStateBadgeColor(
@@ -106,7 +102,6 @@ export const TransitionLog: React.FC = () => {
                         </Badge>
                       </div>
 
-                      {/* Action */}
                       <div className="flex items-center gap-2">
                         <span className="text-sm font-medium">Action:</span>
                         <Badge variant="outline">{transition.actionTaken}</Badge>

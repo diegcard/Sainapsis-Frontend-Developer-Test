@@ -49,7 +49,6 @@ export const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        {/* Customer Info */}
         <div className="space-y-2">
           <div className="flex items-center gap-2 text-sm">
             <User className="h-4 w-4 text-muted-foreground" />
@@ -61,7 +60,6 @@ export const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
           </div>
         </div>
 
-        {/* Product Details */}
         <div className="space-y-2">
           <div className="flex items-center gap-2 text-sm font-medium">
             <Package className="h-4 w-4 text-muted-foreground" />
@@ -76,13 +74,11 @@ export const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
           </div>
         </div>
 
-        {/* Creation Date */}
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Calendar className="h-4 w-4" />
           <span>{formatDate(order.creationDate)}</span>
         </div>
 
-        {/* Notes */}
         {order.notes && (
           <div className="text-sm p-3 bg-muted rounded-md">
             <p className="font-medium mb-1">Notes:</p>

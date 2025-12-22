@@ -1,10 +1,8 @@
 import { OrderState, OrderAction } from '@/types/order.types';
 import type { Order, StateTransition } from '@/types/order.types';
 
-// State Machine Configuration
 export const HIGH_VALUE_THRESHOLD = 1000;
 
-// Define valid transitions for the state machine
 const stateTransitions: Record<OrderState, Record<OrderAction, OrderState | null>> = {
   [OrderState.PENDING]: {
     [OrderAction.START_PREPARATION]: OrderState.IN_PREPARATION,
@@ -64,10 +62,8 @@ export class OrderStateMachine {
     const currentState = order.currentState;
     const nextState = stateTransitions[currentState][action];
 
-    // Check if the transition exists in the state machine
     if (!nextState) return false;
 
-    // Special rule: Orders > $1000 must go through Review before In Preparation
     if (
       order.amount > HIGH_VALUE_THRESHOLD &&
       currentState === OrderState.PENDING &&
@@ -76,7 +72,6 @@ export class OrderStateMachine {
       return false;
     }
 
-    // Orders > $1000 in Pending state can only be reviewed or cancelled
     if (
       order.amount > HIGH_VALUE_THRESHOLD &&
       currentState === OrderState.PENDING &&
@@ -103,12 +98,10 @@ export class OrderStateMachine {
     const currentState = order.currentState;
     const actions: OrderAction[] = [];
 
-    // If order is in terminal state, no actions available
     if (currentState === OrderState.DELIVERED || currentState === OrderState.CANCELLED) {
       return [];
     }
 
-    // Check each possible action
     for (const action of Object.values(OrderAction)) {
       if (this.isValidTransition(order, action)) {
         actions.push(action);

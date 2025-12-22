@@ -48,7 +48,6 @@ export const CreateOrderDialog: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validate form
     if (!customerName || !customerEmail) {
       alert('Please fill in customer information');
       return;
@@ -70,7 +69,6 @@ export const CreateOrderDialog: React.FC = () => {
 
     createOrder(formData);
 
-    // Reset form
     setCustomerName('');
     setCustomerEmail('');
     setProducts([{ name: '', quantity: 1, unitPrice: 0 }]);
@@ -95,7 +93,6 @@ export const CreateOrderDialog: React.FC = () => {
         </DialogHeader>
         <form onSubmit={handleSubmit}>
           <div className="space-y-6 py-4">
-            {/* Customer Information */}
             <div className="space-y-4">
               <h3 className="font-semibold text-sm">Customer Information</h3>
               <div className="grid grid-cols-2 gap-4">
@@ -123,7 +120,6 @@ export const CreateOrderDialog: React.FC = () => {
               </div>
             </div>
 
-            {/* Product Details */}
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <h3 className="font-semibold text-sm">Product Details</h3>
@@ -200,7 +196,6 @@ export const CreateOrderDialog: React.FC = () => {
               </div>
             </div>
 
-            {/* Notes */}
             <div className="space-y-2">
               <Label htmlFor="notes">Notes (Optional)</Label>
               <Textarea
