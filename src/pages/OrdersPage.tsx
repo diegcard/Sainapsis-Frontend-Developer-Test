@@ -1,6 +1,6 @@
 import React from 'react';
-import { CreateOrderDialog } from '../components/orders/CreateOrderDialog';
-import { OrderList } from '../components/orders/OrderList';
+import { CreateOrderDialog } from '@/components/orders/CreateOrderDialog';
+import { OrderList } from '@/components/orders/OrderList';
 
 export const OrdersPage: React.FC = () => {
   return (

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Calendar, Mail, Package, User, AlertCircle } from 'lucide-react';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../ui/card';
-import { Badge } from '../ui/badge';
-import { Button } from '../ui/button';
-import { OrderAction } from '../../types/order.types';
-import type { Order } from '../../types/order.types';
-import { OrderStateMachine, HIGH_VALUE_THRESHOLD } from '../../services/orderStateMachine';
-import { formatCurrency, formatDate } from '../../lib/utils';
-import { useOrders } from '../../context/OrderContext';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { OrderAction } from '@/types/order.types';
+import type { Order } from '@/types/order.types';
+import { OrderStateMachine, HIGH_VALUE_THRESHOLD } from '@/services/orderStateMachine';
+import { formatCurrency, formatDate } from '@/lib/utils';
+import { useOrders } from '@/context/OrderContext';
 
 interface OrderCardProps {
   order: Order;

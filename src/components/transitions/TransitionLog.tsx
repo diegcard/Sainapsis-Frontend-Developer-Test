@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { ArrowRight, Search } from 'lucide-react';
-import { useOrders } from '../../context/OrderContext';
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
-import { Badge } from '../ui/badge';
-import { Input } from '../ui/input';
-import { Label } from '../ui/label';
-import { formatDate } from '../../lib/utils';
-import { OrderStateMachine } from '../../services/orderStateMachine';
+import { useOrders } from '@/context/OrderContext';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { formatDate } from '@/lib/utils';
+import { OrderStateMachine } from '@/services/orderStateMachine';
 
 export const TransitionLog: React.FC = () => {
   const { transitions, orders } = useOrders();

@@ -1,5 +1,5 @@
-import { OrderState, OrderAction } from '../types/order.types';
-import type { Order, StateTransition } from '../types/order.types';
+import { OrderState, OrderAction } from '@/types/order.types';
+import type { Order, StateTransition } from '@/types/order.types';
 
 // State Machine Configuration
 export const HIGH_VALUE_THRESHOLD = 1000;

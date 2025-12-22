@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
 import type { ReactNode } from 'react';
-import { OrderState, OrderAction } from '../types/order.types';
-import type { Order, StateTransition, OrderFormData } from '../types/order.types';
-import { OrderStateMachine } from '../services/orderStateMachine';
+import { OrderState, OrderAction } from '@/types/order.types';
+import type { Order, StateTransition, OrderFormData } from '@/types/order.types';
+import { OrderStateMachine } from '@/services/orderStateMachine';
 
 interface OrderContextType {
   orders: Order[];

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useOrders } from '../../context/OrderContext';
+import { useOrders } from '@/context/OrderContext';
 import { OrderCard } from './OrderCard';
 
 export const OrderList: React.FC = () => {

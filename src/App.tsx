@@ -1,9 +1,8 @@
-import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { OrderProvider } from './context/OrderContext';
-import { Layout } from './layouts/Layout';
-import { OrdersPage } from './pages/OrdersPage';
-import { TransitionsPage } from './pages/TransitionsPage';
+import { OrderProvider } from '@/context/OrderContext';
+import { Layout } from '@/layouts/Layout';
+import { OrdersPage } from '@/pages/OrdersPage';
+import { TransitionsPage } from '@/pages/TransitionsPage';
 
 function App() {
   return (
