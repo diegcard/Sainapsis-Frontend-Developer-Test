@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { TransitionLog } from '@/components/transitions/TransitionLog';
 
 export const TransitionsPage: React.FC = () => {

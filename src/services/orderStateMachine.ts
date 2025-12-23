@@ -103,7 +103,7 @@ export class OrderStateMachine {
     }
 
     for (const action of Object.values(OrderAction)) {
-      if (this.isValidTransition(order, action)) {
+      if (OrderStateMachine.isValidTransition(order, action)) {
         actions.push(action);
       }
     }
@@ -116,13 +116,13 @@ export class OrderStateMachine {
    */
   static executeTransition(
     order: Order,
-    action: OrderAction
+    action: OrderAction,
   ): { newOrder: Order; transition: StateTransition } | null {
-    if (!this.isValidTransition(order, action)) {
+    if (!OrderStateMachine.isValidTransition(order, action)) {
       return null;
     }
 
-    const nextState = this.getNextState(order.currentState, action);
+    const nextState = OrderStateMachine.getNextState(order.currentState, action);
     if (!nextState) return null;
 
     const transition: StateTransition = {
@@ -161,12 +161,9 @@ export class OrderStateMachine {
    * Get the action button variant based on the action type
    */
   static getActionButtonVariant(
-    action: OrderAction
+    action: OrderAction,
   ): 'default' | 'secondary' | 'destructive' | 'outline' {
-    const variants: Record<
-      OrderAction,
-      'default' | 'secondary' | 'destructive' | 'outline'
-    > = {
+    const variants: Record<OrderAction, 'default' | 'secondary' | 'destructive' | 'outline'> = {
       [OrderAction.START_PREPARATION]: 'default',
       [OrderAction.SEND_ORDER]: 'default',
       [OrderAction.CONFIRM_DELIVERY]: 'default',

@@ -7,7 +7,7 @@ export const OrderState = {
   CANCELLED: 'Cancelled',
 } as const;
 
-export type OrderState = typeof OrderState[keyof typeof OrderState];
+export type OrderState = (typeof OrderState)[keyof typeof OrderState];
 
 export const OrderAction = {
   START_PREPARATION: 'Start Preparation',
@@ -18,7 +18,7 @@ export const OrderAction = {
   APPROVE_REVIEW: 'Approve Review',
 } as const;
 
-export type OrderAction = typeof OrderAction[keyof typeof OrderAction];
+export type OrderAction = (typeof OrderAction)[keyof typeof OrderAction];
 
 export interface ProductDetail {
   name: string;

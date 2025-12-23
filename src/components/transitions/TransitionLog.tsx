@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import type React from 'react';
+import { useState } from 'react';
 import { ArrowRight, Search, RefreshCw, Loader2 } from 'lucide-react';
 import { useOrders } from '@/context/OrderContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -92,9 +93,7 @@ export const TransitionLog: React.FC = () => {
                             Order #{getOrderShortId(transition.orderId)}
                           </h3>
                           {order && (
-                            <p className="text-sm text-muted-foreground">
-                              {order.customer.name}
-                            </p>
+                            <p className="text-sm text-muted-foreground">{order.customer.name}</p>
                           )}
                         </div>
                         <div className="text-sm text-muted-foreground">
@@ -104,9 +103,7 @@ export const TransitionLog: React.FC = () => {
 
                       <div className="flex items-center gap-3 p-4 bg-muted rounded-lg">
                         <Badge
-                          className={OrderStateMachine.getStateBadgeColor(
-                            transition.previousState
-                          )}
+                          className={OrderStateMachine.getStateBadgeColor(transition.previousState)}
                         >
                           {transition.previousState}
                         </Badge>

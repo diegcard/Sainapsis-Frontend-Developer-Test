@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { Package, FileText } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -50,9 +50,7 @@ export const Layout: React.FC = () => {
       <footer className="border-t mt-auto">
         <div className="container mx-auto px-4 py-6 text-center text-sm text-muted-foreground">
           <p>Sainapsis Order Management System - Technical Test</p>
-          <p className="mt-1">
-            Built with React, TypeScript, Tailwind CSS, and Shadcn/ui
-          </p>
+          <p className="mt-1">Built with React, TypeScript, Tailwind CSS, and Shadcn/ui</p>
         </div>
       </footer>
     </div>

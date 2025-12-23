@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { CreateOrderDialog } from '@/components/orders/CreateOrderDialog';
 import { OrderList } from '@/components/orders/OrderList';
 

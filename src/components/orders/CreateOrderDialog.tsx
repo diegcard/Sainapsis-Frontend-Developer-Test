@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import type React from 'react';
+import { useState } from 'react';
 import { Plus, Trash2, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -163,7 +164,7 @@ export const CreateOrderDialog: React.FC = () => {
                         type="number"
                         min="1"
                         value={product.quantity}
-                        onChange={(e) => updateProduct(index, 'quantity', parseInt(e.target.value))}
+                        onChange={(e) => updateProduct(index, 'quantity', parseInt(e.target.value, 10))}
                         required
                       />
                     </div>
@@ -192,9 +193,7 @@ export const CreateOrderDialog: React.FC = () => {
                 </div>
               ))}
               <div className="flex justify-end">
-                <div className="text-lg font-semibold">
-                  Total: ${calculateTotal().toFixed(2)}
-                </div>
+                <div className="text-lg font-semibold">Total: ${calculateTotal().toFixed(2)}</div>
               </div>
             </div>
 
@@ -210,7 +209,12 @@ export const CreateOrderDialog: React.FC = () => {
             </div>
           </div>
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => setOpen(false)} disabled={loading}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setOpen(false)}
+              disabled={loading}
+            >
               Cancel
             </Button>
             <Button type="submit" disabled={loading}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { Loader2, RefreshCw, AlertCircle } from 'lucide-react';
 import { useOrders } from '@/context/OrderContext';
 import { OrderCard } from './OrderCard';

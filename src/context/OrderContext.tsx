@@ -1,6 +1,7 @@
-import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import type React from 'react';
+import { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import type { ReactNode } from 'react';
-import { OrderAction } from '@/types/order.types';
+import type { OrderAction } from '@/types/order.types';
 import type { Order, StateTransition, OrderFormData } from '@/types/order.types';
 import { orderApi, ApiError } from '@/services/api';
 
@@ -50,7 +51,6 @@ export const OrderProvider: React.FC<OrderProviderProps> = ({ children }) => {
     } catch (err) {
       const message = err instanceof ApiError ? err.message : 'Failed to fetch orders';
       setError(message);
-      console.error('Error fetching orders:', err);
     } finally {
       setLoading(false);
     }
@@ -64,7 +64,8 @@ export const OrderProvider: React.FC<OrderProviderProps> = ({ children }) => {
       const fetchedTransitions = await orderApi.getAllTransitions();
       setTransitions(fetchedTransitions);
     } catch (err) {
-      console.error('Error fetching transitions:', err);
+      const message = err instanceof ApiError ? err.message : 'Failed to fetch transitions';
+      setError(message);
     }
   }, []);
 
@@ -92,13 +93,12 @@ export const OrderProvider: React.FC<OrderProviderProps> = ({ children }) => {
       } catch (err) {
         const message = err instanceof ApiError ? err.message : 'Failed to create order';
         setError(message);
-        console.error('Error creating order:', err);
         return null;
       } finally {
         setLoading(false);
       }
     },
-    [refreshOrders, refreshTransitions]
+    [refreshOrders, refreshTransitions],
   );
 
   /**
@@ -117,27 +117,26 @@ export const OrderProvider: React.FC<OrderProviderProps> = ({ children }) => {
       } catch (err) {
         const message = err instanceof ApiError ? err.message : 'Failed to execute transition';
         setError(message);
-        console.error('Error executing transition:', err);
         return false;
       } finally {
         setLoading(false);
       }
     },
-    [refreshOrders, refreshTransitions]
+    [refreshOrders, refreshTransitions],
   );
 
   const getOrderById = useCallback(
     (orderId: string): Order | undefined => {
       return orders.find((o) => o.id === orderId);
     },
-    [orders]
+    [orders],
   );
 
   const getTransitionsByOrderId = useCallback(
     (orderId: string): StateTransition[] => {
       return transitions.filter((t) => t.orderId === orderId);
     },
-    [transitions]
+    [transitions],
   );
 
   const clearError = useCallback(() => {

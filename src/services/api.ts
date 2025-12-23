@@ -15,10 +15,7 @@ export class ApiError extends Error {
   }
 }
 
-async function fetchApi<T>(
-  endpoint: string,
-  options: RequestInit = {}
-): Promise<T> {
+async function fetchApi<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const url = `${API_BASE_URL}${endpoint}`;
 
   const config: RequestInit = {
@@ -36,7 +33,7 @@ async function fetchApi<T>(
       const errorData = await response.json().catch(() => ({}));
       throw new ApiError(
         response.status,
-        errorData.message || `HTTP error! status: ${response.status}`
+        errorData.message || `HTTP error! status: ${response.status}`,
       );
     }
 
@@ -50,8 +47,7 @@ async function fetchApi<T>(
 }
 
 export const orderApi = {
-
-    createOrder: async (formData: OrderFormData): Promise<Order> => {
+  createOrder: async (formData: OrderFormData): Promise<Order> => {
     const response = await fetchApi<Order>('/orders', {
       method: 'POST',
       body: JSON.stringify(formData),
@@ -88,14 +84,14 @@ export const orderApi = {
   executeTransition: async (
     orderId: string,
     action: OrderAction,
-    metadata?: Record<string, unknown>
+    metadata?: Record<string, unknown>,
   ): Promise<{ order: Order; transition: StateTransition }> => {
     const response = await fetchApi<{ order: Order; transition: StateTransition }>(
       `/orders/${orderId}/transition`,
       {
         method: 'PATCH',
         body: JSON.stringify({ action, metadata }),
-      }
+      },
     );
 
     return {

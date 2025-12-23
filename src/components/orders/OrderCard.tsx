@@ -1,9 +1,9 @@
-import React from 'react';
+import type React from 'react';
 import { Calendar, Mail, Package, User, AlertCircle, Loader2 } from 'lucide-react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { OrderAction } from '@/types/order.types';
+import type { OrderAction } from '@/types/order.types';
 import type { Order } from '@/types/order.types';
 import { OrderStateMachine, HIGH_VALUE_THRESHOLD } from '@/services/orderStateMachine';
 import { formatCurrency, formatDate } from '@/lib/utils';
@@ -99,11 +99,7 @@ export const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
                 onClick={() => handleAction(action)}
                 disabled={loading}
               >
-                {loading ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  action
-                )}
+                {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : action}
               </Button>
             ))
           )}
