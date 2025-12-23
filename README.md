@@ -11,90 +11,90 @@
 
 *A modern, robust order management system with state machine implementation*
 
-[Installation](#-installation) • [Usage](#-usage-guide) • [Architecture](#-architecture)
+[Installation](#installation--setup) • [Usage](#usage-guide) • [Architecture](#architecture--design-decisions)
 
 </div>
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
-- [About the Project](#-about-the-project)
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [Installation & Setup](#-installation--setup)
-- [Usage Guide](#-usage-guide)
-- [Project Structure](#-project-structure)
-- [State Machine Logic](#-state-machine-logic)
-- [Architecture & Design Decisions](#-architecture--design-decisions)
-- [Evaluation Criteria Compliance](#-evaluation-criteria-compliance)
-- [Author](#-author)
+- [About the Project](#about-the-project)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Installation & Setup](#installation--setup)
+- [Usage Guide](#usage-guide)
+- [Project Structure](#project-structure)
+- [State Machine Logic](#state-machine-logic)
+- [Architecture & Design Decisions](#architecture--design-decisions)
+- [Evaluation Criteria Compliance](#evaluation-criteria-compliance)
+- [Author](#author)
 
 ---
 
-## 🎯 About the Project
+## About the Project
 
 This project is a **frontend application in React** developed as part of the Sainapsis Frontend Developer technical assessment. It implements a sophisticated **order management system** with a **state machine** that controls order flow with specific validation rules based on order amounts.
 
 The application demonstrates expertise in:
-- ✅ Advanced React patterns and best practices
-- ✅ TypeScript for type safety
-- ✅ State machine implementation
-- ✅ Component-based architecture
-- ✅ Modern UI/UX design with Shadcn/ui
+- Advanced React patterns and best practices
+- TypeScript for type safety
+- State machine implementation
+- Component-based architecture
+- Modern UI/UX design with Shadcn/ui
 
-### 🎓 Technical Test Requirements Met
+### Technical Test Requirements Met
 
 This project fulfills all requirements specified in the Sainapsis Frontend Developer Test:
 
-1. ✅ **React User Interface** - Complete order creation form and transition logs view
-2. ✅ **Main Order Management View** - Interactive order cards with state-based actions
-3. ✅ **State Machine Implementation** - Robust state machine with validation rules
-4. ✅ **Entity Attributes** - Complete order and state transition models
-5. ✅ **Transition Logs View** - Filterable history of all state transitions
-6. ✅ **Componentization** - Well-organized, reusable components
-7. ✅ **Style and Design** - Intuitive UI built with Shadcn/ui components
+1. **React User Interface** - Complete order creation form and transition logs view
+2. **Main Order Management View** - Interactive order cards with state-based actions
+3. **State Machine Implementation** - Robust state machine with validation rules
+4. **Entity Attributes** - Complete order and state transition models
+5. **Transition Logs View** - Filterable history of all state transitions
+6. **Componentization** - Well-organized, reusable components
+7. **Style and Design** - Intuitive UI built with Shadcn/ui components
 
 ---
 
-## ✨ Features
+## Features
 
 ### Core Functionality
 
-#### 🛒 Order Management
+#### Order Management
 - **Create Orders** - Comprehensive form with customer info, multiple products, and notes
 - **View Orders** - Card-based layout with all order details
 - **State Transitions** - Action buttons for valid state changes
 - **High-Value Detection** - Automatic detection and special handling for orders >$1,000
 
-#### 🔄 State Machine
+#### State Machine
 - **Predefined States**: Pending → In Preparation → Shipped → Delivered
 - **Review Process**: Orders >$1,000 require review: Pending → In Review → In Preparation
 - **Cancellation**: Orders can be cancelled before shipping
 - **Validation**: States cannot be skipped; strict transition rules enforced
 
-#### 📊 Transition Logs
+#### Transition Logs
 - **Complete History** - All state transitions recorded with timestamps
 - **Filtering** - Search by Order ID
 - **Detailed Information** - Previous state, new state, action taken, and date/time
 
 ### User Experience
 
-#### 🎨 Modern UI/UX
+#### Modern UI/UX
 - **Responsive Design** - Works seamlessly on desktop, tablet, and mobile
 - **Color-Coded States** - Visual feedback with distinct colors for each state
 - **Intuitive Navigation** - Tab-based navigation between views
 - **Real-Time Updates** - Instant UI updates on all actions
 - **Visual Indicators** - High-value order badges and status indicators
 
-#### ♿ Accessibility
+#### Accessibility
 - **Keyboard Navigation** - Full keyboard support
 - **Screen Reader Support** - Proper ARIA labels
 - **Focus Management** - Clear focus indicators
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend Framework
 - **React 18.3.1** - Modern UI library with hooks
@@ -118,7 +118,7 @@ This project fulfills all requirements specified in the Sainapsis Frontend Devel
 
 ---
 
-## 📦 Installation & Setup
+## Installation & Setup
 
 ### Prerequisites
 
@@ -175,7 +175,7 @@ The production-ready files will be generated in the `dist` directory. You can de
 
 ---
 
-## 💡 Usage Guide
+## Usage Guide
 
 ### Creating a New Order
 
@@ -244,7 +244,7 @@ Pending → In Review → In Preparation → Shipped → Delivered
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Sainapsis-Frontend-Developer-Test/
@@ -293,7 +293,7 @@ Sainapsis-Frontend-Developer-Test/
 
 ---
 
-## 🔄 State Machine Logic
+## State Machine Logic
 
 ### State Definitions
 
@@ -376,7 +376,7 @@ class OrderStateMachine {
 
 ---
 
-## 🏗️ Architecture & Design Decisions
+## Architecture & Design Decisions
 
 ### Component Architecture
 
@@ -414,11 +414,11 @@ class OrderStateMachine {
 - **Custom Hooks**: `useOrders()` for component access
 
 #### Why Context API?
-- ✅ Built-in React solution
-- ✅ Sufficient for application size
-- ✅ No external dependencies
-- ✅ Simple and maintainable
-- ✅ Type-safe with TypeScript
+- Built-in React solution
+- Sufficient for application size
+- No external dependencies
+- Simple and maintainable
+- Type-safe with TypeScript
 
 ### Type Safety
 
@@ -443,11 +443,11 @@ export interface StateTransition {...}
 ### Styling Approach
 
 #### Tailwind CSS Benefits
-- ✅ Utility-first approach
-- ✅ Rapid development
-- ✅ Consistent design system
-- ✅ Purged unused CSS in production
-- ✅ Responsive design utilities
+- Utility-first approach
+- Rapid development
+- Consistent design system
+- Purged unused CSS in production
+- Responsive design utilities
 
 #### Shadcn/ui Integration
 - Pre-built accessible components
@@ -458,13 +458,13 @@ export interface StateTransition {...}
 
 ---
 
-## 📝 License
+## License
 
 This project was created as part of the Sainapsis technical assessment.
 
 ---
 
-## 👨‍💻 Author
+## Author
 
 **Diego Cardenas**
 
@@ -472,7 +472,7 @@ Developed as part of the **Sainapsis Frontend Developer Technical Test** - Decem
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - **Sainapsis** - For the opportunity to showcase my skills
 - **Shadcn/ui** - For the excellent component library
@@ -484,8 +484,8 @@ Developed as part of the **Sainapsis Frontend Developer Technical Test** - Decem
 
 <div align="center">
 
-**Built with ❤️ using React, TypeScript, and modern web technologies**
+**Built with React, TypeScript, and modern web technologies**
 
-[⬆ Back to Top](#sainapsis-order-management-system)
+[Back to Top](#sainapsis-order-management-system)
 
 </div>
