@@ -1,16 +1,21 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import type { ReactNode } from 'react';
-import { OrderState, OrderAction } from '@/types/order.types';
+import { OrderAction } from '@/types/order.types';
 import type { Order, StateTransition, OrderFormData } from '@/types/order.types';
-import { OrderStateMachine } from '@/services/orderStateMachine';
+import { orderApi, ApiError } from '@/services/api';
 
 interface OrderContextType {
   orders: Order[];
   transitions: StateTransition[];
-  createOrder: (formData: OrderFormData) => Order;
-  executeTransition: (orderId: string, action: OrderAction) => boolean;
+  loading: boolean;
+  error: string | null;
+  createOrder: (formData: OrderFormData) => Promise<Order | null>;
+  executeTransition: (orderId: string, action: OrderAction) => Promise<boolean>;
   getOrderById: (orderId: string) => Order | undefined;
   getTransitionsByOrderId: (orderId: string) => StateTransition[];
+  refreshOrders: () => Promise<void>;
+  refreshTransitions: () => Promise<void>;
+  clearError: () => void;
 }
 
 const OrderContext = createContext<OrderContextType | undefined>(undefined);
@@ -30,55 +35,95 @@ interface OrderProviderProps {
 export const OrderProvider: React.FC<OrderProviderProps> = ({ children }) => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [transitions, setTransitions] = useState<StateTransition[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const createOrder = useCallback((formData: OrderFormData): Order => {
-    const amount = formData.productDetails.reduce(
-      (sum, product) => sum + product.quantity * product.unitPrice,
-      0
-    );
-
-    const newOrder: Order = {
-      id: crypto.randomUUID(),
-      amount,
-      currentState: OrderState.PENDING,
-      creationDate: new Date(),
-      customer: formData.customer,
-      productDetails: formData.productDetails,
-      notes: formData.notes,
-    };
-
-    setOrders((prev) => [...prev, newOrder]);
-
-    const initialTransition: StateTransition = {
-      id: crypto.randomUUID(),
-      orderId: newOrder.id,
-      previousState: OrderState.PENDING,
-      newState: OrderState.PENDING,
-      transitionDate: new Date(),
-      actionTaken: OrderAction.START_PREPARATION,
-    };
-
-    setTransitions((prev) => [...prev, initialTransition]);
-
-    return newOrder;
+  /**
+   * Fetch all orders from the backend
+   */
+  const refreshOrders = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const fetchedOrders = await orderApi.getAllOrders();
+      setOrders(fetchedOrders);
+    } catch (err) {
+      const message = err instanceof ApiError ? err.message : 'Failed to fetch orders';
+      setError(message);
+      console.error('Error fetching orders:', err);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
-  const executeTransition = useCallback(
-    (orderId: string, action: OrderAction): boolean => {
-      const order = orders.find((o) => o.id === orderId);
-      if (!order) return false;
+  /**
+   * Fetch all transitions from the backend
+   */
+  const refreshTransitions = useCallback(async () => {
+    try {
+      const fetchedTransitions = await orderApi.getAllTransitions();
+      setTransitions(fetchedTransitions);
+    } catch (err) {
+      console.error('Error fetching transitions:', err);
+    }
+  }, []);
 
-      const result = OrderStateMachine.executeTransition(order, action);
-      if (!result) return false;
+  /**
+   * Load initial data on mount
+   */
+  useEffect(() => {
+    refreshOrders();
+    refreshTransitions();
+  }, [refreshOrders, refreshTransitions]);
 
-      const { newOrder, transition } = result;
-
-      setOrders((prev) => prev.map((o) => (o.id === orderId ? newOrder : o)));
-      setTransitions((prev) => [...prev, transition]);
-
-      return true;
+  /**
+   * Create a new order via API
+   */
+  const createOrder = useCallback(
+    async (formData: OrderFormData): Promise<Order | null> => {
+      setLoading(true);
+      setError(null);
+      try {
+        const newOrder = await orderApi.createOrder(formData);
+        // Refresh data to ensure consistency with backend
+        await refreshOrders();
+        await refreshTransitions();
+        return newOrder;
+      } catch (err) {
+        const message = err instanceof ApiError ? err.message : 'Failed to create order';
+        setError(message);
+        console.error('Error creating order:', err);
+        return null;
+      } finally {
+        setLoading(false);
+      }
     },
-    [orders]
+    [refreshOrders, refreshTransitions]
+  );
+
+  /**
+   * Execute a state transition via API
+   */
+  const executeTransition = useCallback(
+    async (orderId: string, action: OrderAction): Promise<boolean> => {
+      setLoading(true);
+      setError(null);
+      try {
+        await orderApi.executeTransition(orderId, action);
+        // Refresh data to ensure consistency with backend
+        await refreshOrders();
+        await refreshTransitions();
+        return true;
+      } catch (err) {
+        const message = err instanceof ApiError ? err.message : 'Failed to execute transition';
+        setError(message);
+        console.error('Error executing transition:', err);
+        return false;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [refreshOrders, refreshTransitions]
   );
 
   const getOrderById = useCallback(
@@ -95,13 +140,22 @@ export const OrderProvider: React.FC<OrderProviderProps> = ({ children }) => {
     [transitions]
   );
 
+  const clearError = useCallback(() => {
+    setError(null);
+  }, []);
+
   const value: OrderContextType = {
     orders,
     transitions,
+    loading,
+    error,
     createOrder,
     executeTransition,
     getOrderById,
     getTransitionsByOrderId,
+    refreshOrders,
+    refreshTransitions,
+    clearError,
   };
 
   return <OrderContext.Provider value={value}>{children}</OrderContext.Provider>;

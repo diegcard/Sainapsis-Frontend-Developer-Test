@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { ArrowRight, Search } from 'lucide-react';
+import { ArrowRight, Search, RefreshCw, Loader2 } from 'lucide-react';
 import { useOrders } from '@/context/OrderContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { formatDate } from '@/lib/utils';
 import { OrderStateMachine } from '@/services/orderStateMachine';
 
 export const TransitionLog: React.FC = () => {
-  const { transitions, orders } = useOrders();
+  const { transitions, orders, loading, refreshTransitions } = useOrders();
   const [filterOrderId, setFilterOrderId] = useState('');
 
   const filteredTransitions = filterOrderId
@@ -18,11 +19,26 @@ export const TransitionLog: React.FC = () => {
 
   const getOrderShortId = (orderId: string) => orderId.slice(0, 8);
 
+  if (loading && transitions.length === 0) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <span className="ml-2 text-muted-foreground">Loading transitions...</span>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">Filter Transitions</CardTitle>
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-lg">Filter Transitions</CardTitle>
+            <Button variant="outline" size="sm" onClick={refreshTransitions} disabled={loading}>
+              <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
+              Refresh
+            </Button>
+          </div>
         </CardHeader>
         <CardContent>
           <div className="space-y-2">

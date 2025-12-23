@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, Mail, Package, User, AlertCircle } from 'lucide-react';
+import { Calendar, Mail, Package, User, AlertCircle, Loader2 } from 'lucide-react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -14,12 +14,12 @@ interface OrderCardProps {
 }
 
 export const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
-  const { executeTransition } = useOrders();
+  const { executeTransition, loading } = useOrders();
 
   const availableActions = OrderStateMachine.getAvailableActions(order);
 
-  const handleAction = (action: OrderAction) => {
-    const success = executeTransition(order.id, action);
+  const handleAction = async (action: OrderAction) => {
+    const success = await executeTransition(order.id, action);
     if (!success) {
       alert('Failed to execute transition. Please check the order state.');
     }
@@ -97,8 +97,13 @@ export const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
                 variant={OrderStateMachine.getActionButtonVariant(action)}
                 size="sm"
                 onClick={() => handleAction(action)}
+                disabled={loading}
               >
-                {action}
+                {loading ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  action
+                )}
               </Button>
             ))
           )}

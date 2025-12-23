@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Trash2 } from 'lucide-react';
+import { Plus, Trash2, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -17,7 +17,7 @@ import { useOrders } from '@/context/OrderContext';
 import type { OrderFormData, ProductDetail } from '@/types/order.types';
 
 export const CreateOrderDialog: React.FC = () => {
-  const { createOrder } = useOrders();
+  const { createOrder, loading } = useOrders();
   const [open, setOpen] = useState(false);
 
   const [customerName, setCustomerName] = useState('');
@@ -45,7 +45,7 @@ export const CreateOrderDialog: React.FC = () => {
     return products.reduce((sum, p) => sum + p.quantity * p.unitPrice, 0);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!customerName || !customerEmail) {
@@ -67,13 +67,15 @@ export const CreateOrderDialog: React.FC = () => {
       notes: notes || undefined,
     };
 
-    createOrder(formData);
+    const result = await createOrder(formData);
 
-    setCustomerName('');
-    setCustomerEmail('');
-    setProducts([{ name: '', quantity: 1, unitPrice: 0 }]);
-    setNotes('');
-    setOpen(false);
+    if (result) {
+      setCustomerName('');
+      setCustomerEmail('');
+      setProducts([{ name: '', quantity: 1, unitPrice: 0 }]);
+      setNotes('');
+      setOpen(false);
+    }
   };
 
   return (
@@ -208,10 +210,19 @@ export const CreateOrderDialog: React.FC = () => {
             </div>
           </div>
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+            <Button type="button" variant="outline" onClick={() => setOpen(false)} disabled={loading}>
               Cancel
             </Button>
-            <Button type="submit">Create Order</Button>
+            <Button type="submit" disabled={loading}>
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Creating...
+                </>
+              ) : (
+                'Create Order'
+              )}
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>
