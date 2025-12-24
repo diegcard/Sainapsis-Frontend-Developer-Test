@@ -131,23 +131,61 @@ Before you begin, ensure you have the following installed:
 1. **Clone the repository**
    ```bash
    git clone https://github.com/diegcard/Sainapsis-Frontend-Developer-Test.git
-
    cd Sainapsis-Frontend-Developer-Test
    ```
 
-2. **Install dependencies**
+2. **Install frontend dependencies**
    ```bash
    npm install
    ```
 
-3. **Start the development server**
+3. **Configure environment**
    ```bash
+   # Copy the environment example file
+   cp .env.example .env
+   
+   # Edit .env if needed (default: http://localhost:3000/api)
+   ```
+
+4. **Install and start the Backend** (Required for API communication)
+   ```bash
+   cd backend-nestjs
+   npm install
+   npm run start:dev
+   ```
+   The backend will run at `http://localhost:3000`
+
+5. **Start the Frontend** (in a new terminal)
+   ```bash
+   # From the root project folder (not backend-nestjs)
    npm run dev
    ```
 
-4. **Open your browser**
+6. **Open your browser**
    
    Navigate to `http://localhost:5173`
+
+### Project Structure
+
+```
+Sainapsis-Frontend-Developer-Test/   # Root (Frontend)
+├── src/                             # Frontend source code
+├── backend-nestjs/                  # Backend folder (inside frontend)
+├── package.json                     # Frontend dependencies
+└── ...
+```
+
+### Backend Integration
+
+This frontend is designed to work with the NestJS backend located in the `backend-nestjs` folder. Make sure the backend is running before using the application:
+
+- **Backend URL**: `http://localhost:3000/api`
+- **Frontend URL**: `http://localhost:5173`
+
+The API configuration can be changed in the `.env` file:
+```env
+VITE_API_URL=http://localhost:3000/api
+```
 
 ### Available Scripts
 
